@@ -3,6 +3,7 @@ package com.grepp.coffee_project.global;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass// 직접적으로 테이블로 매핑되지 않으며, 이 클래스를 상속받는 엔티티들은 이 클래스에 정의된 필드와 매핑 정보를 자신의 테이블에 포함시킨다.
 @EntityListeners(AuditingEntityListener.class)// 자동으로 생성시간 수정시간 기록해준다.
+@Getter
 public class BaseEntity {
     @CreatedDate
     private LocalDateTime createdAt;
