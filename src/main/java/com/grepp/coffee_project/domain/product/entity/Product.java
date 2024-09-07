@@ -1,18 +1,19 @@
 package com.grepp.coffee_project.domain.product.entity;
 
+import com.grepp.coffee_project.domain.order.entity.OrderItem;
 import com.grepp.coffee_project.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigInteger;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class ProductEntity extends BaseEntity {
+public class Product extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)// 나중에 binart로 바꾸자
@@ -30,7 +31,8 @@ public class ProductEntity extends BaseEntity {
     @Column(columnDefinition = "VARCHAR(500) DEFAULT NULL")
     private String description;  // 기본값을 NULL로 설정
 
-
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems;
 
 
 }

@@ -9,7 +9,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class AdminEntity extends BaseEntity {
+public class Admin extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
