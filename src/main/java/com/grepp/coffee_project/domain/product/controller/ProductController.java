@@ -1,10 +1,13 @@
 package com.grepp.coffee_project.domain.product.controller;
 
 import com.grepp.coffee_project.domain.product.dto.CreateCoffeeDto;
+import com.grepp.coffee_project.domain.product.dto.ResponseDto;
 import com.grepp.coffee_project.domain.product.entity.Product;
 import com.grepp.coffee_project.domain.product.repository.ProductRepository;
 import com.grepp.coffee_project.domain.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,11 +27,16 @@ public class ProductController {
     @GetMapping
     public List<Product> getCoffee(){
         return productRepository.findAll();
-    }
+    } //원래는 서비스에서 구현해야긴하지
 
     @PostMapping
-    public Product postCoffee(@RequestBody CreateCoffeeDto createCoffeeDto){
-        return productService.makeCoffee(createCoffeeDto);
+    public ResponseEntity<ResponseDto> postCoffee(@RequestBody CreateCoffeeDto createCoffeeDto){
+        try {
+            ResponseDto getProduct= productService.makeCoffee(createCoffeeDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(getProduct);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }//약간의 예외처리
     }
 
 }
