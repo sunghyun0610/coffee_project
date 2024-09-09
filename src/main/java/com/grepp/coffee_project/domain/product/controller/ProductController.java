@@ -1,6 +1,8 @@
 package com.grepp.coffee_project.domain.product.controller;
 
 import com.grepp.coffee_project.domain.product.dto.CreateCoffeeDto;
+import com.grepp.coffee_project.domain.product.dto.DetailCoffeeDto;
+import com.grepp.coffee_project.domain.product.dto.ReadCoffeeDto;
 import com.grepp.coffee_project.domain.product.dto.ResponseDto;
 import com.grepp.coffee_project.domain.product.entity.Product;
 import com.grepp.coffee_project.domain.product.repository.ProductRepository;
@@ -25,9 +27,21 @@ public class ProductController {
     }
 
     @GetMapping("/coffee")
-    public List<Product> getCoffee(){
-        return productRepository.findAll();
+    public ResponseEntity<List<ReadCoffeeDto>> getAllCoffee(){
+        try {
+            List<ReadCoffeeDto> readCoffeeDtoList = productService.getAllCoffee();
+            return ResponseEntity.status(HttpStatus.CREATED).body(readCoffeeDtoList);
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     } //원래는 서비스에서 구현해야긴하지
+    @GetMapping("/coffee/{Id}")
+    public ResponseEntity<DetailCoffeeDto> getOneCoffee(@PathVariable("Id") Long id){//GetNapping의 Id 와 PathVariable 변수명 Id가 동일해야 한다.
+        DetailCoffeeDto detailCoffeeDto = new DetailCoffeeDto();
+        detailCoffeeDto=productService.getOneCoffee(id);
+        return ResponseEntity.status(HttpStatus.CREATED).body(detailCoffeeDto);
+    }
 
     @PostMapping("/coffee")
     public ResponseEntity<ResponseDto> postCoffee(@RequestBody CreateCoffeeDto createCoffeeDto){

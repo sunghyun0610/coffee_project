@@ -1,16 +1,48 @@
 package com.grepp.coffee_project.domain.product.service;
 
 import com.grepp.coffee_project.domain.product.dto.CreateCoffeeDto;
+import com.grepp.coffee_project.domain.product.dto.DetailCoffeeDto;
+import com.grepp.coffee_project.domain.product.dto.ReadCoffeeDto;
 import com.grepp.coffee_project.domain.product.dto.ResponseDto;
 import com.grepp.coffee_project.domain.product.entity.Product;
 import com.grepp.coffee_project.domain.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class ProductService {
     @Autowired
     ProductRepository productRepository;
+
+
+
+    public List<ReadCoffeeDto> getAllCoffee(){
+        List<ReadCoffeeDto> readCoffeeDtoList=new ArrayList<>();
+        List<Product> productList =productRepository.findAll();  //findAll== SELECT * FROM products;
+        for(Product product: productList){
+            ReadCoffeeDto readCoffeeDto= new ReadCoffeeDto();
+            readCoffeeDto.setImage("이미지는 아직 테스트중");
+            readCoffeeDto.setProductId(product.getProduct_id());
+            readCoffeeDto.setProductName(product.getProduct_name());
+            readCoffeeDtoList.add(readCoffeeDto);
+        }
+        return readCoffeeDtoList;
+    }
+
+    public DetailCoffeeDto getOneCoffee(long id){
+        Optional<Product> coffee =productRepository.findById(id);//조회
+        DetailCoffeeDto detailCoffeeDto=new DetailCoffeeDto();
+        detailCoffeeDto.setImage("이미지는 아직 준비중이라고");
+        detailCoffeeDto.setProductName(coffee.get().getProduct_name());
+        detailCoffeeDto.setDescription(coffee.get().getDescription());
+        detailCoffeeDto.setPrice(coffee.get().getPrice());
+        detailCoffeeDto.setProductId(coffee.get().getProduct_id());
+        return detailCoffeeDto;
+    }
 
     public ResponseDto makeCoffee(CreateCoffeeDto createCoffeeDto){
 
