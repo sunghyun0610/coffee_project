@@ -1,9 +1,6 @@
 package com.grepp.coffee_project.domain.product.controller;
 
-import com.grepp.coffee_project.domain.product.dto.CreateCoffeeDto;
-import com.grepp.coffee_project.domain.product.dto.DetailCoffeeDto;
-import com.grepp.coffee_project.domain.product.dto.ReadCoffeeDto;
-import com.grepp.coffee_project.domain.product.dto.ResponseDto;
+import com.grepp.coffee_project.domain.product.dto.*;
 import com.grepp.coffee_project.domain.product.entity.Product;
 import com.grepp.coffee_project.domain.product.repository.ProductRepository;
 import com.grepp.coffee_project.domain.product.service.ProductService;
@@ -13,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -54,7 +52,33 @@ public class ProductController {
     }
 
     @PatchMapping("/coffee/{Id}") //Patch : 부분수정 , Put : 전체 수정
+    public ResponseEntity<?> updateCoffee(@PathVariable("Id") Long id, @RequestBody UpdateCoffeeDto updateCoffeeDto){
+        Optional<Product> product= productRepository.findById(id);
+        if(product.isPresent()){
+            Product updateCoffee= product.get();//Optional객체 안에 product꺼내오기
+            if(updateCoffeeDto.getCategory()!=null){
+                updateCoffee.setCategory(updateCoffeeDto.getCategory());
+            }
+            if(updateCoffeeDto.getDescription()!=null){
+                updateCoffee.setDescription(updateCoffeeDto.getDescription());
+            }
+            if(updateCoffeeDto.getPrice()>0){
+                updateCoffee.setPrice(updateCoffeeDto.getPrice());
+            }
+            if(updateCoffeeDto.getProductName()!=null){
+                updateCoffee.setProduct_name(updateCoffeeDto.getProductName());
+            }
+            productRepository.save(updateCoffee);
+            return ResponseEntity.status(HttpStatus.CREATED).body(updateCoffeeDto);
 
+        }else {
+            System.out.println("커피 조회실패요");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("커피 조회 실패 ㅠ");
+        }
+
+    }
+//네, JPA에서는 기본적으로 엔티티를 수정할 때 수정된 값을 엔티티에 반영한 후 다시 저장하는 방식을 사용합니다.
+// 즉, 엔티티 객체의 속성을 변경한 후 save() 메서드를 호출하여 데이터베이스에 업데이트된 값을 반영하는 것입니다.
 
 }
 
