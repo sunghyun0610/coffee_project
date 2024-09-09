@@ -41,8 +41,10 @@ public class ProductService {
         detailCoffeeDto.setDescription(coffee.get().getDescription());
         detailCoffeeDto.setPrice(coffee.get().getPrice());
         detailCoffeeDto.setProductId(coffee.get().getProduct_id());
+        detailCoffeeDto.setCategory(coffee.get().getCategory());
         return detailCoffeeDto;
     }
+    // 첫 번째 get()은 Optional에서 Product를 가져오는 것이고, 두 번째 getCategory()는 Product 객체의 필드 값을 가져오는 메서드입니다.
 
     public ResponseDto makeCoffee(CreateCoffeeDto createCoffeeDto){
 

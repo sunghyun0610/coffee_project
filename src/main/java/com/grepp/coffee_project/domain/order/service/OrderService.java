@@ -58,7 +58,7 @@ public class OrderService {
 
     public ReadOrderDto readOrder(String email){
         //이메일이 오면 그걸로 모두 조회해서 총주문목록을 알아내는 것
-        List<Order> orders= orderRepository.findAllByEmail(email);//이메일로 들어온 주문들을 모두 뽑아옴. -> 주문 id로 중간테이블 접근 : 수량을 알아와라
+        List<Order> orders= orderRepository.findOrdersByEmailWithOrderItems(email);//이메일로 들어온 주문들을 모두 뽑아옴. -> 주문 id로 중간테이블 접근 : 수량을 알아와라
         ReadOrderDto readOrderDto=new ReadOrderDto();
         readOrderDto.setEmail(email);
         readOrderDto.setAddress(orders.get(0).getAddress());

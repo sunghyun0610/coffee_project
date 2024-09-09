@@ -53,6 +53,9 @@ public class ProductController {
         }//약간의 예외처리
     }
 
+    @PatchMapping("/coffee/{Id}") //Patch : 부분수정 , Put : 전체 수정
+
+
 }
 
 //이처럼 @Autowired로 의존성 주입된 ProductRepository와 ProductService는 각각 하나의 인스턴스만 생성되어 애플리케이션 내에서 공유됩니다.
