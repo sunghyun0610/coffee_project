@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/coffee")
+@RequestMapping("/api/v1")
 public class ProductController {
     private ProductRepository productRepository;
     private ProductService productService;
@@ -24,12 +24,12 @@ public class ProductController {
         this.productService=productService;
     }
 
-    @GetMapping
+    @GetMapping("/coffee")
     public List<Product> getCoffee(){
         return productRepository.findAll();
     } //원래는 서비스에서 구현해야긴하지
 
-    @PostMapping
+    @PostMapping("/coffee")
     public ResponseEntity<ResponseDto> postCoffee(@RequestBody CreateCoffeeDto createCoffeeDto){
         try {
             ResponseDto getProduct= productService.makeCoffee(createCoffeeDto);

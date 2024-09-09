@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class OrderItem extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long seq;
 
     @ManyToOne//외래키는 다수쪽에 위 == 연관관계의 주인이다
@@ -23,7 +23,6 @@ public class OrderItem extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "product_id" ,nullable = false)
     private Product product;
-
     @Column(nullable = false)
     private String category;
     @Column(nullable = false)
