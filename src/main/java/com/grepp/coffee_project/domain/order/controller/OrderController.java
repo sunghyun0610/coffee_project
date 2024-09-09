@@ -2,6 +2,7 @@ package com.grepp.coffee_project.domain.order.controller;
 
 import com.grepp.coffee_project.domain.order.dto.CreateOrderDto;
 import com.grepp.coffee_project.domain.order.dto.OrderResponseDto;
+import com.grepp.coffee_project.domain.order.dto.ReadOrderDto;
 import com.grepp.coffee_project.domain.order.entity.Order;
 import com.grepp.coffee_project.domain.order.entity.OrderItem;
 import com.grepp.coffee_project.domain.order.repository.OrderItemRepository;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController // Controller + responsebody
@@ -39,10 +41,12 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderResponseDto);
 
     }
-//    @GetMapping("/order")
-//    public ResponseEntity<?> selectOrder(String email){
-//        //이메일을 받으면 이에대한 주문목록을 조회해서 가온나
-//    }
+    @GetMapping("/order")
+    public ResponseEntity<?> selectOrder(@RequestParam("email") String email){
+        //이메일을 받으면 이에대한 주문목록을 조회해서 가온나
+       ReadOrderDto readOrderDtoList= orderService.readOrder(email);
+       return ResponseEntity.status(HttpStatus.CREATED).body(readOrderDtoList);
+    }
 
 
 }
