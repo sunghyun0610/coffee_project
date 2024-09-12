@@ -36,3 +36,9 @@ public class Product extends BaseEntity {
 
 
 }
+//Order-OrderProduct 양방향 관계 설정
+//
+//주문은 주문 목록과 부모 자식 관계를 맺는다고 생각하여 양방향 관계로 지정하였다.
+//Product-OrderProduct 단방향 관계 설정
+//
+//상품과 주문상품에 대해서는 주문 상품은 상품을 알아야 하지만 상품은 주문 상품에 대해 알 필요가 없다고 여겨져서 단방향 관계로 설정하였다.
