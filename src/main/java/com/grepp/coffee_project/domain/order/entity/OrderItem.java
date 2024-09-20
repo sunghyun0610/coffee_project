@@ -16,11 +16,11 @@ public class OrderItem extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long seq;
 
-    @ManyToOne//외래키는 다수쪽에 위 == 연관관계의 주인이다
+    @ManyToOne//외래키는 다수쪽에 위치 == 연관관계의 주인이다
     @JoinColumn(name = "order_id" ,nullable = false)
     private Order order;
 
-    @ManyToOne
+    @ManyToOne//ManyToone은 Eager가 기본값
     @JoinColumn(name = "product_id" ,nullable = false)
     private Product product;
     @Column(nullable = false)

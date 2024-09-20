@@ -30,7 +30,7 @@ public class Order extends BaseEntity {
     @Column(nullable = false)
     private String order_status;
 
-    @OneToMany(mappedBy = "order" ,cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "order" ,cascade = CascadeType.ALL, orphanRemoval = true) //OneToMany는 Lazy가 기본값
     private List<OrderItem> orderItems;
 }
 //OneToMany

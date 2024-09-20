@@ -11,6 +11,7 @@ import com.grepp.coffee_project.domain.order.repository.OrderItemRepository;
 import com.grepp.coffee_project.domain.order.repository.OrderRepository;
 import com.grepp.coffee_project.domain.product.entity.Product;
 import com.grepp.coffee_project.domain.product.repository.ProductRepository;
+import com.grepp.coffee_project.utils.LogExecutionTime;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,8 @@ public class OrderService {
     OrderRepository orderRepository;
     OrderItemRepository orderItemRepository;
     ProductRepository productRepository;
+
+
     @Autowired//이건 생략가능
     public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository, ProductRepository productRepository){
         this.orderRepository=orderRepository;
@@ -29,6 +32,7 @@ public class OrderService {
         this.productRepository=productRepository;
     }
 
+    @LogExecutionTime
     public OrderResponseDto makeOrder(CreateOrderDto createOrderDto){
         //주문을 해보자
         Order order=OrderConverter.toEntity(createOrderDto);
@@ -56,6 +60,7 @@ public class OrderService {
         }
     }
 
+    @LogExecutionTime
     public ReadOrderDto readOrder(String email){
         //이메일이 오면 그걸로 모두 조회해서 총주문목록을 알아내는 것
         List<Order> orders= orderRepository.findOrdersByEmailWithOrderItems(email);//이메일로 들어온 주문들을 모두 뽑아옴. -> 주문 id로 중간테이블 접근 : 수량을 알아와라
